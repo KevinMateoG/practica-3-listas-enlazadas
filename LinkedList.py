@@ -88,6 +88,9 @@ class DoubleLinkedList:
     #Agregar al final de la lista
     def append(self, value):
         new_node = DNode(value) #creo el nuevo nodo
+        if self.existe_titulo(value.nombre):
+            return
+        
         if(self.__size == 0): #está vacía?
             self.__head = new_node
             self.__tail = new_node
@@ -100,7 +103,7 @@ class DoubleLinkedList:
     def insert(self, pos, value):
         current_pos = 0 #posición actual
         current_node = self.__head #nodo inicial
-        if(pos > self.__size-1):
+        if(pos > self.__size - 1):
             raise IndexError("índice inválido")
 
         new_node = DNode(value)
@@ -186,6 +189,14 @@ class DoubleLinkedList:
         while(current_node is not None):
             print(current_node.value)
             current_node = current_node.prev
+
+    def existe_titulo(self, titulo):
+        current = self.__head
+        while current:
+            if current.value.nombre == titulo:
+                return True
+            current = current.next
+        return False
 
     def __repr__(self):
         return f"{self.__head}"
