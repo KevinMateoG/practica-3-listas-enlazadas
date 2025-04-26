@@ -209,7 +209,8 @@ class DoubleLinkedList:
         else:
             for i in range(self.__size):
                 print(f"nombre de la cancion: {current.value.nombre}, artista: {current.value.artista}, duracion: {current.value.duracion} Seg")
-                time.sleep(current.value.duracion)
+                self.reproducir_con_barra(current.value)
+                #time.sleep(current.value.duracion)
                 current = current.next
     
     def borrar_por_titulo(self, titulo):
@@ -280,5 +281,14 @@ class DoubleLinkedList:
                 current_pos += 1
                 current = current.next
 
+    def reproducir_con_barra(self, cancion):
+        duracion = cancion.duracion
+        for segundos in range(duracion + 1):
+            barra = ('█' * segundos) + ('-' * (duracion - segundos))
+            sys.stdout.write(f"\r[{barra}] {segundos}/{duracion}s")
+            sys.stdout.flush()
+            time.sleep(1)
+        print()  # Salto de línea después de terminar la barra
+    
     def __repr__(self):
         return f"{self.__head}"
