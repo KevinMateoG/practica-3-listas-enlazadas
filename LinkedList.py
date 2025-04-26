@@ -1,3 +1,7 @@
+import time
+import random
+import sys
+
 class Cancion:
     def __init__(self, nombre: str,artista: str, duracion: int):
         self.nombre = nombre
@@ -197,6 +201,84 @@ class DoubleLinkedList:
                 return True
             current = current.next
         return False
+    
+    def avanzar_siguiente_cancion(self):
+        current = self.__head
+        if self.__size == 0:
+            return
+        else:
+            for i in range(self.__size):
+                print(f"nombre de la cancion: {current.value.nombre}, artista: {current.value.artista}, duracion: {current.value.duracion} Seg")
+                time.sleep(current.value.duracion)
+                current = current.next
+    
+    def borrar_por_titulo(self, titulo):
+        current = self.__head
+        pos = 0
+        if self.__size == 0:
+            return
+        if self.__size == 1 or current.value.nombre == titulo:
+            self.delete_first()
+        else:
+            while current is not None:
+                
+                if current.value.nombre == titulo:
+                    if self.__size == pos+1:
+                        self.deleat_end()
+                        return
+                    
+                    else:
+                        current.prev.next = current.next
+                        current.next.prev = current.prev
+                        self.__size -= 1
+                        return
+                pos += 1
+                current = current.next
+    
+    def mostrar_playlist(self):
+        current = self.__head
+        mostrar = 0
+        if self.__size == 0:
+            return
+        
+        else:
+            while current:
+                mostrar+=1
+                print(mostrar,"." ,current.value.nombre)
+                print("------------------")
+                current = current.next
+
+    def adelantar_cancion(self):
+        ...
+    
+    def aleatorio(self):
+        cont = 0
+        lista_aleatoria = []
+        while self.__size != len(lista_aleatoria):
+            num_aleatorio = random.randint(0, self.__size-1)
+            if num_aleatorio in lista_aleatoria:
+                cont -= 1
+            else:
+                lista_aleatoria.append(num_aleatorio)
+                cont += 1
+            
+        for i in lista_aleatoria:
+            self.ejecutar_por_posicion(i)
+
+        print(lista_aleatoria)
+    
+    def ejecutar_por_posicion(self, pos):
+        current_pos = 0
+        current= self.__head
+        if self.__size == 0:
+            return
+        else:
+            while current.next is not None:
+                if current_pos == pos:
+                    print(current.value.artista)
+                    time.sleep(current.value.duracion)
+                current_pos += 1
+                current = current.next
 
     def __repr__(self):
         return f"{self.__head}"
