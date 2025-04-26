@@ -27,7 +27,6 @@ while True:
         elif entrada.lower() == "reproducir":
             t = threading.Thread(target=lista_de_canciones.avanzar_siguiente_cancion)
             t.start()
-
         
         elif entrada.lower() == "mostrar":
             lista_de_canciones.mostrar_playlist()
