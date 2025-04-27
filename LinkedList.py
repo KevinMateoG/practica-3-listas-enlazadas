@@ -11,74 +11,12 @@ class Cancion:
     def __repr__(self):
         return str(self.artista)
 
-class Node:
-    def __init__(self, value, next = None):
-        self.value: Cancion = value
-        self.next: Node = next
-
-class Linklist:
-    def __init__(self):
-        self.__head: Node = None
-        self.__tail: Node = None
-        self.__size: int = 0
-    
-    def append(self, value):
-        new_node: Node = Node(value)
-        if self.__size == 0:
-            self.__head = new_node
-            self.__tail = new_node
-        else:
-            self.__tail.next = new_node
-            self.__tail = new_node
-        self.__size += 1
-    
-    def deleat_end(self):
-        current = self.__head
-        if self.__size == 0:
-            return "no hay nada"
-        elif self.__size == 1:
-            self.__head = None
-            self.__tail = None
-        else:
-            while current.next.next is not None:
-                current = current.next
-            current.next = None
-            self.__tail = current
-        self.__size -= 1
-    
-    def travers (self):
-        current = self.__head
-        if self.__size == 0:
-            return
-        print(current.value)
-        while current.next is not None:
-            current = current.next
-            print(current.value)
-    
-    def invertir_lista(self):
-        anterior = None
-        actual = self.__head
-        self.__tail = self.__head 
-        while actual:
-            siguiente = actual.next
-            actual.next = anterior
-            anterior = actual
-            actual = siguiente
-        self.__head = anterior
-
-    def __repr__(self):
-        rep = ""
-        current_node = self.__head
-        while current_node is not None:
-            rep += str(current_node.value) + "->" + " "
-            current_node = current_node.next
-        return rep
-
 class DNode:
     def __init__(self, value, next = None, prev = None):
         self.value = value
         self.next = next
         self.prev = prev
+
 
     def __repr__(self):
         return f"{self.value} <-> {self.next}"
@@ -88,6 +26,7 @@ class DoubleLinkedList:
         self.__head = head
         self.__tail = tail
         self.__size = 0
+        self.__pos = 0
 
     #Agregar al final de la lista
     def append(self, value):
@@ -201,18 +140,23 @@ class DoubleLinkedList:
                 return True
             current = current.next
         return False
-    
-    def avanzar_siguiente_cancion(self):
+
+    def avanzar_de_a_uno(self):
+        self.ejecutar_por_posicion(self.__pos)
+        self.__pos += 1
+
+    def avanzar_automatico(self):
         current = self.__head
         if self.__size == 0:
+            print("No hay canciones en la playlist.")
             return
-        else:
-            for i in range(self.__size):
-                print(f"nombre de la cancion: {current.value.nombre}, artista: {current.value.artista}, duracion: {current.value.duracion} Seg")
-                self.reproducir_con_barra(current.value)
-                #time.sleep(current.value.duracion)
-                current = current.next
-    
+        
+        while current is not None:
+            print(f"\nReproduciendo: {current.value.nombre} - {current.value.artista} ({current.value.duracion} segundos)")
+            self.reproducir_con_barra(current.value)
+            current = current.next
+        self.__pos = 0
+
     def borrar_por_titulo(self, titulo):
         current = self.__head
         pos = 0
@@ -266,7 +210,6 @@ class DoubleLinkedList:
         for i in lista_aleatoria:
             self.ejecutar_por_posicion(i)
 
-        print(lista_aleatoria)
     
     def ejecutar_por_posicion(self, pos):
         current_pos = 0
@@ -274,12 +217,12 @@ class DoubleLinkedList:
         if self.__size == 0:
             return
         else:
-            while current.next is not None:
+            while current is not None:
                 if current_pos == pos:
-                    print(current.value.artista)
-                    time.sleep(current.value.duracion)
-                current_pos += 1
+                    print(f"\nReproduciendo: {current.value.nombre} - {current.value.artista} ({current.value.duracion} segundos)")
+                    self.reproducir_con_barra(current.value)
                 current = current.next
+                current_pos += 1
 
     def reproducir_con_barra(self, cancion):
         duracion = cancion.duracion
@@ -288,7 +231,7 @@ class DoubleLinkedList:
             sys.stdout.write(f"\r[{barra}] {segundos}/{duracion}s")
             sys.stdout.flush()
             time.sleep(1)
-        print()  # Salto de línea después de terminar la barra
+        print() 
     
     def __repr__(self):
         return f"{self.__head}"
