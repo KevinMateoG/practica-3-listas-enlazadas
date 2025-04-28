@@ -142,8 +142,8 @@ class DoubleLinkedList:
         return False
 
     def avanzar_de_a_uno(self):
-        self.ejecutar_por_posicion(self.__pos)
-        self.__pos += 1
+        self.ejecutar_por_posicion(self.__pos, flag=True)
+        
 
     def avanzar_automatico(self):
         current = self.__head
@@ -194,7 +194,19 @@ class DoubleLinkedList:
                 current = current.next
 
     def adelantar_cancion(self):
-        ...
+        current = self.__head
+        if self.__size == 0:
+            return
+        else:
+            current_pos = 0
+            adelanto = int(input("ingrese cuanto desea adelanatar: "))
+            adelanto = adelanto * 100
+            print(adelanto)
+            while current is not None:
+                if self.__pos == current_pos:
+                    self.reproducir_con_barra(current.value, flag=True, adelatar=adelanto)
+                current = current.next
+                current_pos += 1
     
     def aleatorio(self):
         cont = 0
@@ -211,7 +223,8 @@ class DoubleLinkedList:
             self.ejecutar_por_posicion(i)
 
     
-    def ejecutar_por_posicion(self, pos):
+    def ejecutar_por_posicion(self, pos, flag=False):
+        print(self.__pos)
         current_pos = 0
         current= self.__head
         if self.__size == 0:
@@ -223,9 +236,14 @@ class DoubleLinkedList:
                     self.reproducir_con_barra(current.value)
                 current = current.next
                 current_pos += 1
+        if flag == True:
+            self.__pos += 1
+        print(self.__pos)
 
-    def reproducir_con_barra(self, cancion):
+    def reproducir_con_barra(self, cancion, flag=False, adelatar = None):
         duracion = cancion.duracion
+        if flag is True:
+            duracion *= adelatar
         for segundos in range(duracion + 1):
             barra = ('█' * segundos) + ('-' * (duracion - segundos))
             sys.stdout.write(f"\r[{barra}] {segundos}/{duracion}s")
