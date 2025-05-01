@@ -230,7 +230,7 @@ class DoubleLinkedList:
             self.__pos -= 1
         self.ejecutar_por_posicion(self.__pos)
     
-    def ejecutar_por_posicion(self, pos, flag=False):
+    def ejecutar_por_posicion(self, pos):
         current_pos = 0
         current= self.__head
         if self.__size == 0:
