@@ -143,8 +143,8 @@ class DoubleLinkedList:
 
     def avanzar_de_a_uno(self):
         self.ejecutar_por_posicion(self.__pos, flag=True)
-        
-
+        self.__pos += 1
+    
     def avanzar_automatico(self):
         current = self.__head
         if self.__size == 0:
@@ -189,22 +189,20 @@ class DoubleLinkedList:
         else:
             while current:
                 mostrar+=1
-                print(mostrar,"." ,current.value.nombre)
+                print(f"[{mostrar}]. 🎶 {current.value.nombre} - {current.value.artista} ({current.value.duracion}s)")
                 print("------------------")
                 current = current.next
+                time.sleep(1)
 
-    def adelantar_cancion(self):
+    def adelantar_cancion(self, adelanto):
         current = self.__head
         if self.__size == 0:
             return
         else:
             current_pos = 0
-            adelanto = int(input("ingrese cuanto desea adelanatar: "))
-            adelanto = adelanto * 100
-            print(adelanto)
             while current is not None:
                 if self.__pos == current_pos:
-                    self.reproducir_con_barra(current.value, flag=True, adelatar=adelanto)
+                    self.reproducir_con_barra(current.value, flag=True, adelatar=adelanto/100)
                 current = current.next
                 current_pos += 1
     
@@ -221,10 +219,18 @@ class DoubleLinkedList:
             
         for i in lista_aleatoria:
             self.ejecutar_por_posicion(i)
-
+    
+    def cancion_de_atras(self):
+        if self.__size == 0:
+            print("La playlist está vacía.")
+            return
+        if self.__pos <= 0:
+            self.__pos = self.__size - 1
+        else:
+            self.__pos -= 1
+        self.ejecutar_por_posicion(self.__pos)
     
     def ejecutar_por_posicion(self, pos, flag=False):
-        print(self.__pos)
         current_pos = 0
         current= self.__head
         if self.__size == 0:
@@ -232,24 +238,22 @@ class DoubleLinkedList:
         else:
             while current is not None:
                 if current_pos == pos:
-                    print(f"\nReproduciendo: {current.value.nombre} - {current.value.artista} ({current.value.duracion} segundos)")
+                    print("\n🎧 Reproduciendo ahora:")
+                    print(f"🎵 {current.value.nombre} - {current.value.artista} ({current.value.duracion} segundos)")
+                    print("──────────────────────────────────────────────")
                     self.reproducir_con_barra(current.value)
                 current = current.next
                 current_pos += 1
-        if flag == True:
-            self.__pos += 1
-        print(self.__pos)
 
     def reproducir_con_barra(self, cancion, flag=False, adelatar = None):
         duracion = cancion.duracion
         if flag is True:
-            duracion *= adelatar
-        for segundos in range(duracion + 1):
+            duracion = int(duracion * adelatar) 
+        for segundos in range(int(duracion) + 1):
             barra = ('█' * segundos) + ('-' * (duracion - segundos))
             sys.stdout.write(f"\r[{barra}] {segundos}/{duracion}s")
             sys.stdout.flush()
             time.sleep(1)
         print() 
-    
     def __repr__(self):
         return f"{self.__head}"
