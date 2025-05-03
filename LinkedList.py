@@ -192,7 +192,6 @@ class DoubleLinkedList:
                 print(f"[{mostrar}]. 🎶 {current.value.nombre} - {current.value.artista} ({current.value.duracion}s)")
                 print("------------------")
                 current = current.next
-                time.sleep(1)
 
     def adelantar_cancion(self, adelanto):
         current = self.__head
@@ -244,6 +243,52 @@ class DoubleLinkedList:
                     self.reproducir_con_barra(current.value)
                 current = current.next
                 current_pos += 1
+    
+    def borrar_artista(self, artista):
+        current_node = self.__head
+        pos = 0
+        if self.__size == 0:
+            raise IndexError("Lista vacía")
+        
+        if self.__size == 1 or current_node.value.artista == artista:
+            self.delete_first()
+            
+        else:
+            while current_node is not None:
+                if current_node.value.artista == artista:
+                    if self.__size == pos+1:
+                        self.deleat_end()
+                        return
+                    else:
+                        current_node.prev.next = current_node.next
+                        current_node.next.prev = current_node.prev
+                        self.__size -= 1
+                        return
+                current_node = current_node.next
+                pos += 1
+    
+    def eliminar_artista_con_menos_canciones(self):
+        current= self.__head
+        diccionario_de_artistas={}
+        menor = 999
+
+        while current is not None:
+            if current.value.artista not in diccionario_de_artistas:
+                diccionario_de_artistas[current.value.artista]=1
+            else:
+                diccionario_de_artistas[current.value.artista] += 1
+            current = current.next
+        
+        for art in diccionario_de_artistas:
+            if menor > diccionario_de_artistas[art]:
+                menor = diccionario_de_artistas[art]
+                artista_menor = art
+        
+        current = self.__head
+        while current is not None:
+            if current.value.artista == artista_menor:
+                self.borrar_artista(artista_menor)
+            current = current.next
 
     def reproducir_con_barra(self, cancion, flag=False, adelatar = None):
         duracion = cancion.duracion
