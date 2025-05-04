@@ -142,7 +142,7 @@ class DoubleLinkedList:
         return False
 
     def avanzar_de_a_uno(self):
-        self.ejecutar_por_posicion(self.__pos, flag=True)
+        self.ejecutar_por_posicion(self.__pos)
         self.__pos += 1
     
     def avanzar_automatico(self):
