@@ -34,6 +34,7 @@ while True:
     print("8. Borrar artista con menos canciones")
     print("9. Crear una sub-playlist")
     print("10. Reproducir sub-playlist")
+    print("11. Eliminar una cancion")
     print("Escribe tu opción y presiona Enter:")
     
     entrada = input()
@@ -97,5 +98,9 @@ while True:
             sub_playlist.avanzar_automatico()
         else:
             print("No existe Sub-playlist")
+    
+    elif entrada.lower() == "11":
+        nombre = input("ingrese el nombre de la cancion que desea aliminar")
+        play_list_general.borrar_por_titulo(nombre)
 
 #multiprocesing
