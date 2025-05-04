@@ -3,7 +3,7 @@ import random
 import sys
 
 class Cancion:
-    def __init__(self, nombre: str,artista: str, duracion: int):
+    def __init__(self, nombre: str, artista: str, duracion: int):
         self.nombre = nombre
         self.artista = artista
         self.duracion = duracion
@@ -299,6 +299,40 @@ class DoubleLinkedList:
             sys.stdout.write(f"\r[{barra}] {segundos}/{duracion}s")
             sys.stdout.flush()
             time.sleep(1)
-        print() 
+        print()
+    
+    def sub_playlist_por_artista(self, artista):
+        nueva_lista = DoubleLinkedList()
+        current = self.__head
+        while current is not None:
+            if current.value.artista.lower() == artista.lower():
+                nueva_lista.append(current.value)
+            current = current.next
+        return nueva_lista
+
+    def sub_playlist_por_duracion(self, duracion_min):
+        nueva_lista = DoubleLinkedList()
+        current = self.__head
+        while current is not None:
+            if current.value.duracion >= duracion_min:
+                nueva_lista.append(current.value)
+            current = current.next
+        return nueva_lista
+
+    def sub_playlist_aleatoria(self, cantidad):
+        nueva_lista = DoubleLinkedList()
+        if self.__size == 0 or cantidad <= 0:
+            return nueva_lista
+        
+        indices = random.sample(range(self.__size), min(cantidad, self.__size))
+        current = self.__head
+        idx = 0
+        while current:
+            if idx in indices:
+                nueva_lista.append(current.value)
+            idx += 1
+            current = current.next
+        return nueva_lista
+
     def __repr__(self):
         return f"{self.__head}"
