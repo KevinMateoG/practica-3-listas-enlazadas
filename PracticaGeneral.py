@@ -7,17 +7,17 @@ def crear_canciones(nombre, artista, duracion):
     return Cancion(str(nombre), artista,duracion)
 
 play_list_general = DoubleLinkedList()
-play_list_general.append(crear_canciones("aishite", "Ado",2))
-play_list_general.append(crear_canciones("Begosip", "Maneskin",3))
-play_list_general.append(crear_canciones("Galileo", "queen",2))
-play_list_general.append(crear_canciones("i want to bracke free", "queen",4))
-play_list_general.append(crear_canciones("hola", "luis miguel",3))
-play_list_general.append(crear_canciones("we will rock you", "queen",2))
-play_list_general.append(crear_canciones("i want your slave", "Maneskin",1))
-play_list_general.append(crear_canciones("crime and punish", "Ado",2))
-play_list_general.append(crear_canciones("show", "Ado",3))
-play_list_general.append(crear_canciones("zitti e buoni", "Maneskin",3))
-play_list_general.append(crear_canciones("bikini azul", "luis miguel",4))
+play_list_general.append(crear_canciones("aishite", "Ado",15))
+play_list_general.append(crear_canciones("Begosip", "Maneskin",12))
+play_list_general.append(crear_canciones("Galileo", "queen",15))
+play_list_general.append(crear_canciones("i want to bracke free", "queen",13))
+play_list_general.append(crear_canciones("hola", "luis miguel",12))
+play_list_general.append(crear_canciones("we will rock you", "queen",15))
+play_list_general.append(crear_canciones("i want your slave", "Maneskin",12))
+play_list_general.append(crear_canciones("crime and punish", "Ado",15))
+play_list_general.append(crear_canciones("show", "Ado",12))
+play_list_general.append(crear_canciones("zitti e buoni", "Maneskin",12))
+play_list_general.append(crear_canciones("bikini azul", "luis miguel",13))
 
 sub_playlist = None
 while True:
