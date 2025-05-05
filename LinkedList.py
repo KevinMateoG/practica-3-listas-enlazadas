@@ -142,6 +142,8 @@ class DoubleLinkedList:
         return False
 
     def avanzar_de_a_uno(self):
+        if self.__pos == self.__size:
+            self.__pos = 0
         self.ejecutar_por_posicion(self.__pos)
         self.__pos += 1
     
@@ -156,6 +158,7 @@ class DoubleLinkedList:
             self.reproducir_con_barra(current.value)
             current = current.next
         self.__pos = 0
+        self.avanzar_automatico()
 
     def borrar_por_titulo(self, titulo):
         current = self.__head
@@ -319,20 +322,43 @@ class DoubleLinkedList:
             current = current.next
         return nueva_lista
 
-    def sub_playlist_aleatoria(self, cantidad):
-        nueva_lista = DoubleLinkedList()
-        if self.__size == 0 or cantidad <= 0:
+    def sub_playlist_agregar_de_general(self,nombre, nueva_lista):
+        if nueva_lista is None:
+            nueva_lista = DoubleLinkedList()
+        if self.__size == 0:
             return nueva_lista
-        
-        indices = random.sample(range(self.__size), min(cantidad, self.__size))
         current = self.__head
-        idx = 0
-        while current:
-            if idx in indices:
+        while current is not None:
+            if current.value.nombre.lower() == nombre.lower():
                 nueva_lista.append(current.value)
-            idx += 1
+                return nueva_lista
             current = current.next
         return nueva_lista
+    
+    def sub_playlist_con_duracion_mas_repetida(self):
+        nueva_lista = DoubleLinkedList()
+        dict_duracion = {}
+        min = 0
+        if self.__head is None:
+            return nueva_lista
+        current = self.__head
+        while current is not None:
+            if current.value.duracion not in dict_duracion:
+                dict_duracion[current.value.duracion] = [current.value]
+            else:
+                dict_duracion[current.value.duracion].append(current.value)
+            current = current.next
+        
+        for duracion in dict_duracion:
+            if int(duracion) > min:
+                min = int(duracion)
+                canciones_agregar = dict_duracion[duracion]
+        
+        for cancion in canciones_agregar:
+            nueva_lista.append(cancion)
+        
+        return nueva_lista
 
+        
     def __repr__(self):
         return f"{self.__head}"

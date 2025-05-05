@@ -7,17 +7,17 @@ def crear_canciones(nombre, artista, duracion):
     return Cancion(str(nombre), artista,duracion)
 
 play_list_general = DoubleLinkedList()
-play_list_general.append(crear_canciones("aishite", "Ado",randint(10, 15)))
-play_list_general.append(crear_canciones("Begosip", "Maneskin",randint(10, 15)))
-play_list_general.append(crear_canciones("Galileo", "queen",randint(10, 15)))
-play_list_general.append(crear_canciones("i want to bracke free", "queen",randint(10, 15)))
-play_list_general.append(crear_canciones("hola", "luis miguel",randint(10, 15)))
-play_list_general.append(crear_canciones("we will rock you", "queen",randint(10, 15)))
-play_list_general.append(crear_canciones("i want your slave", "Maneskin",randint(10, 15)))
-play_list_general.append(crear_canciones("crime and punish", "Ado",randint(10, 15)))
-play_list_general.append(crear_canciones("show", "Ado",randint(10, 15)))
-play_list_general.append(crear_canciones("zitti e buoni", "Maneskin",randint(10, 15)))
-play_list_general.append(crear_canciones("bikini azul", "luis miguel",randint(10, 15)))
+play_list_general.append(crear_canciones("aishite", "Ado",2))
+play_list_general.append(crear_canciones("Begosip", "Maneskin",3))
+play_list_general.append(crear_canciones("Galileo", "queen",2))
+play_list_general.append(crear_canciones("i want to bracke free", "queen",4))
+play_list_general.append(crear_canciones("hola", "luis miguel",3))
+play_list_general.append(crear_canciones("we will rock you", "queen",2))
+play_list_general.append(crear_canciones("i want your slave", "Maneskin",1))
+play_list_general.append(crear_canciones("crime and punish", "Ado",2))
+play_list_general.append(crear_canciones("show", "Ado",3))
+play_list_general.append(crear_canciones("zitti e buoni", "Maneskin",3))
+play_list_general.append(crear_canciones("bikini azul", "luis miguel",4))
 
 sub_playlist = None
 while True:
@@ -35,6 +35,7 @@ while True:
     print("9. Crear una sub-playlist")
     print("10. Reproducir sub-playlist")
     print("11. Eliminar una cancion")
+    print("12. mostrar la sub playlist")
     print("Escribe tu opción y presiona Enter:")
     
     entrada = input()
@@ -70,6 +71,7 @@ while True:
         print("1. Por artista")
         print("2. Por duración mínima")
         print("3. Agregar de a cancion")
+        print("4. agregar de la playlista general")
         subop = input("Opción: ")
 
         if subop == "1":
@@ -81,10 +83,18 @@ while True:
             sub_playlist = play_list_general.sub_playlist_por_duracion(duracion)
         
         elif subop == "3":
+            if sub_playlist is None:
+                sub_playlist = DoubleLinkedList()
             nombre = input("ingrese el nombre de la cancion")
             artista = input("ingrese el artista")
-            sub_playlist = DoubleLinkedList()
             sub_playlist.append(crear_canciones(nombre, artista, randint(10,15)))
+        
+        elif subop == "4":
+            nombre = input("nombre de la cancion")
+            sub_playlist = play_list_general.sub_playlist_agregar_de_general(nombre, sub_playlist)
+        
+        elif subop == "5":
+            sub_playlist = play_list_general.sub_playlist_con_duracion_mas_repetida()
         
         else:
             print("Opción inválida.")
@@ -102,5 +112,11 @@ while True:
     elif entrada.lower() == "11":
         nombre = input("ingrese el nombre de la cancion que desea aliminar")
         play_list_general.borrar_por_titulo(nombre)
+    
+    elif entrada.lower() == "12":
+        sub_playlist.mostrar_playlist()
 
 #multiprocesing
+"""
+sub_playlist_con_canciones_que-tengan_la_duracion_que_mas_se_repita
+"""
